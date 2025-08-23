@@ -4,6 +4,7 @@ class Receipt {
   String content;
   double total;
   String date;
+  String category;
 
   Receipt({
     this.id,
@@ -11,6 +12,7 @@ class Receipt {
     required this.content,
     required this.total,
     required this.date,
+    this.category = "Lainnya",
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +22,7 @@ class Receipt {
       'content': content,
       'total': total,
       'date': date,
+      'category': category,
     };
   }
 
@@ -28,8 +31,9 @@ class Receipt {
       id: map['id'],
       title: map['title'],
       content: map['content'],
-      total: map['total'],
+      total: (map['total'] is int) ? (map['total'] as int).toDouble() : map['total'],
       date: map['date'],
+      category: map['category'] ?? "Lainnya",
     );
   }
 }
