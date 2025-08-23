@@ -35,6 +35,19 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
+  # Kamera & file picker
+  image_picker: ^1.0.7
+
+  # Google ML Kit untuk OCR
+  google_mlkit_text_recognition: ^0.15.0
+
+  # Database lokal
+  sqflite: ^2.3.0
+  path: ^1.8.3
+
+  # Chart untuk laporan
+  fl_chart: ^0.70.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
