@@ -1,50 +1,37 @@
 import 'package:flutter/material.dart';
-import '../db/database_helper.dart';
-import '../models/receipt.dart';
-import 'detail_page.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
+import '../providers/transaction_provider.dart';
+import 'transaction_detail_page.dart';
 
-class HistoryPage extends StatefulWidget {
+class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
 
   @override
-  State<HistoryPage> createState() => _HistoryPageState();
-}
-
-class _HistoryPageState extends State<HistoryPage> {
-  List<Receipt> _receipts = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _loadReceipts();
-  }
-
-  Future<void> _loadReceipts() async {
-    final data = await DatabaseHelper.instance.getReceipts();
-    setState(() {
-      _receipts = data;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("History")),
-      body: ListView.builder(
-        itemCount: _receipts.length,
-        itemBuilder: (context, index) {
-          final receipt = _receipts[index];
+    final prov = Provider.of<TransactionProvider>(context);
+    return prov.loading
+        ? Center(child: CircularProgressIndicator())
+        : RefreshIndicator(
+      onRefresh: prov.loadAll,
+      child: prov.transactions.isEmpty
+          ? ListView(
+        children: [
+          SizedBox(height: 200),
+          Icon(Icons.receipt_long, size: 80, color: Colors.grey),
+          SizedBox(height: 12),
+          Center(child: Text('Belum ada transaksi. Tekan + untuk tambah.')),
+        ],
+      )
+          : ListView.builder(
+        itemCount: prov.transactions.length,
+        itemBuilder: (context, idx) {
+          final t = prov.transactions[idx];
           return ListTile(
-            leading: const Icon(Icons.receipt),
-            title: Text(receipt.title),
-            subtitle: Text("Total: Rp ${receipt.total.toStringAsFixed(2)}"),
-            trailing: Text(receipt.date.split("T").first),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => DetailPage(receipt: receipt)),
-              );
-            },
+            title: Text(t.storeName.isEmpty ? 'Store' : t.storeName),
+            subtitle: Text(DateFormat.yMMMd().format(t.date)),
+            trailing: Text(NumberFormat.currency(locale: 'id_ID', symbol: 'Rp ').format(t.total)),
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => TransactionDetailPage(transaction: t))),
           );
         },
       ),
