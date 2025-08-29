@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'scan_receipt_docling_page.dart';
 import '../widgets/app_drawer.dart';
 import 'history_page.dart';
 import 'statistics_page.dart';
-import 'scan_receipt_page.dart';
+import 'scan_receipt_ml_kit_page.dart';
 import 'add_manual_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -26,7 +27,15 @@ class _HomePageState extends State<HomePage> {
               title: Text('Scan Struk (ML Kit)'),
               onTap: () async {
                 Navigator.of(context).pop();
-                await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ScanReceiptPage()));
+                await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ScanReceiptMLKitPage()));
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.camera_alt),
+              title: Text('Scan Struk (Docling)'),
+              onTap: () async {
+                Navigator.of(context).pop();
+                await Navigator.of(context).push(MaterialPageRoute(builder: (_) => ScanReceiptDoclingPage()));
               },
             ),
             ListTile(

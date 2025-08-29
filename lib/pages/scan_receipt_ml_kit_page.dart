@@ -6,13 +6,13 @@ import '../services/receipt_parser.dart';
 import '../models/transaction_model.dart';
 import '../providers/transaction_provider.dart';
 
-class ScanReceiptPage extends StatefulWidget {
-  const ScanReceiptPage({super.key});
+class ScanReceiptMLKitPage extends StatefulWidget {
+  const ScanReceiptMLKitPage({super.key});
   @override
-  _ScanReceiptPageState createState() => _ScanReceiptPageState();
+  _ScanReceiptMLKitPageState createState() => _ScanReceiptMLKitPageState();
 }
 
-class _ScanReceiptPageState extends State<ScanReceiptPage> {
+class _ScanReceiptMLKitPageState extends State<ScanReceiptMLKitPage> {
   final picker = ImagePicker();
   String _status = 'Pilih gambar atau ambil foto struk';
 
@@ -46,7 +46,7 @@ class _ScanReceiptPageState extends State<ScanReceiptPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Scan Struk')),
+      appBar: AppBar(title: Text('Scan Struk ML Kit')),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
